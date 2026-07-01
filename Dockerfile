@@ -17,8 +17,34 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /workspace
 
-# Copy pre-cloned repos and downloaded packages from CI build context
-COPY src/ /workspace/
-COPY aitg-packages/ /workspace/aitg-packages/
+COPY repos.txt /workspace/repos.txt
+
+# Clone all repos (cached after first build)
+RUN while IFS= read -r line; do \
+        line=$(echo "$line" | sed 's/#.*//;s/^[[:space:]]*//;s/[[:space:]]*$//'); \
+        [ -z "$line" ] && continue; \
+        repo=$(echo "$line" | awk '{print $1}'); \
+        branch=$(echo "$line" | awk '{print $2}'); \
+        name=$(basename "$repo"); \
+        echo "=== Cloning $repo ==="; \
+        if [ -n "$branch" ]; then \
+            git clone --branch "$branch" "https://github.com/$repo.git" "$name" || echo "WARN: failed to clone $repo"; \
+        else \
+            git clone "https://github.com/$repo.git" "$name" || echo "WARN: failed to clone $repo"; \
+        fi; \
+    done < /workspace/repos.txt
+
+# Fetch latest code (rebuilt every time via CACHE_BUST arg)
+ARG CACHE_BUST
+RUN for dir in /workspace/*/; do \
+        [ -d "$dir/.git" ] && echo "=== Fetching $(basename "$dir") ===" && \
+        git -C "$dir" fetch --all --quiet 2>/dev/null || true; \
+    done
+
+# Download AITG PyPI package source distributions
+ARG CACHE_BUST2
+RUN mkdir -p /workspace/aitg-packages && \
+    pip3 download --no-binary :all: --no-deps -d /workspace/aitg-packages \
+    helia-edge physiokit heartkit neuralspotx sleepkit helia-aot neuralspot-edge
 
 CMD ["/bin/bash"]
