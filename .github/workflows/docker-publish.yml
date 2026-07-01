@@ -40,7 +40,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=schedule,pattern={{date 'YYYY-MM'}}
+            type=schedule,pattern={{date 'YYYY.MM.DD'}}
             type=raw,value=latest
             type=sha,prefix=
 
@@ -48,7 +48,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           push: true

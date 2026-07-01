@@ -6,6 +6,7 @@ LABEL description="AmbiqAI Edge AI Stack - lightweight source image"
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
     git \
     curl \
     wget \
