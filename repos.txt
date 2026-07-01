@@ -1,0 +1,23 @@
+# AmbiqAI 2026 active repositories
+# Format: <owner>/<repo> [branch]
+AmbiqAI/nsx-ambiq-sdk
+AmbiqAI/ns-cmsis-nn
+AmbiqAI/neuralspotx
+AmbiqAI/nsx-pmu-armv8m
+AmbiqAI/helia-rt
+AmbiqAI/vela_example_generator
+AmbiqAI/helia-core-tester
+AmbiqAI/nsx-opus
+AmbiqAI/nsx-ethos-u-driver
+AmbiqAI/nsx-sensors
+AmbiqAI/soundkit
+AmbiqAI/nsx-nanopb
+AmbiqAI/helia-edge
+AmbiqAI/helia-model-zoo
+AmbiqAI/DeepFilterNet_tf
+AmbiqAI/neuralSPOT
+AmbiqAI/ns-tileio
+AmbiqAI/physiokit
+AmbiqAI/sleepkit
+AmbiqAI/heartkit
+AmbiqAI/web-ble-dashboards
