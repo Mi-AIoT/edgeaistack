@@ -32,4 +32,9 @@ RUN while IFS= read -r line; do \
         fi; \
     done < /workspace/repos.txt
 
+# Download AITG PyPI package source distributions
+RUN mkdir -p /workspace/aitg-packages && \
+    pip3 download --no-binary :all: --no-deps -d /workspace/aitg-packages \
+    helia-edge physiokit heartkit neuralspotx sleepkit helia-aot neuralspot-edge
+
 CMD ["/bin/bash"]
