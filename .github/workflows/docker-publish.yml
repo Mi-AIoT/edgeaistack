@@ -1,6 +1,7 @@
 name: Build and Push EdgeAI Stack
 
 on:
+  # Schedule trigger
   schedule:
     # 每月 1 号 UTC 02:00 构建
     - cron: '0 2 1 * *'
@@ -13,7 +14,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}/edgeaistack
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   build-and-push:
